@@ -1,4 +1,4 @@
 const Sequelize = require('sequelize')
-const db = new Sequelize('postgres://localhost/YOUR_DB')
+const db = new Sequelize('postgres://localhost/scheduling-app')
 
 module.exports = db

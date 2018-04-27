@@ -5,18 +5,28 @@
   "license": "MIT",
   "dependencies": {
     "@tmkelly28/tk-css": "^1.0.2",
+    "axios": "^0.18.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "express-handlebars-sections": "^1.0.1",
+    "googleapis": "^27.0.0",
+    "material-ui": "^0.20.0",
+    "moment": "^2.22.1",
     "morgan": "^1.8.2",
+    "nodemailer": "^4.6.4",
+    "nodemailer-express-handlebars": "^3.0.0",
+    "normalize.css": "^8.0.0",
     "pg": "^6.4.0",
     "pg-hstore": "^2.3.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
+    "react-tap-event-plugin": "^3.0.2",
     "sequelize": "^4.2.1"
   },
   "scripts": {
-    "start": "webpack -w & nodemon server/app.js --ignore public"
+    "start": "webpack -w & nodemon server/app.js --ignore public",
+    "quickstart": "node quickstart.js"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -26,7 +36,10 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.11",
+    "eslint-loader": "^2.0.0",
+    "html-webpack-plugin": "^3.2.0",
     "nodemon": "^1.11.0",
+    "path": "^0.12.7",
     "style-loader": "^0.20.3",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12"
