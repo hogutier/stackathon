@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
+import axios from 'axios'
 
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
@@ -50,6 +51,18 @@ export default class App extends Component {
     this.handleChangeLastName = this.handleChangeLastName.bind(this)
     this.handleChangeEmail = this.handleChangeEmail.bind(this)
     this.handleChangePhone = this.handleChangePhone.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit = () => {
+    axios.post('/api/send', {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      phone: this.state.phone,
+      startTime: this.state.startTime,
+      date: this.state.date
+    })
   }
 
   handleChangeFirstName = (event, newValue) => {
@@ -132,10 +145,6 @@ export default class App extends Component {
 
   render() {
     const { finished, stepIndex, date, startTime, firstName, lastName, email, phone } = this.state
-    console.log("FIRST", firstName)
-    console.log("LAST", lastName)
-    console.log("Email", email)
-    console.log("phone", phone)
 /*     console.log("**DATE***", moment(date).format('YYYY-MM-DD'))
     console.log("**MONTH***", moment(date).format('M'))
     console.log("**DAY***", moment(date).format('D'))
@@ -181,7 +190,7 @@ export default class App extends Component {
           </Step>
           <Step>
             <StepLabel>
-              Share your contant information with us and we'll send you a reminder
+              Share your contact information with us and we'll send you a reminder
             </StepLabel>
             <StepContent>
               <section>
@@ -218,6 +227,10 @@ export default class App extends Component {
             </StepContent>
           </Step>
         </Stepper>
+        {finished && (          //make sure this works!!!!!
+          this.handleSubmit
+        )}
+
         {finished && (
           <p style={{margin: '20px 0', textAlign: 'center'}}>
             <a
