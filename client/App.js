@@ -23,7 +23,12 @@ export default class App extends Component {
   constructor() {
     super()
     this.state = {
-      date: moment(),
+      date: moment().format('YYYY-MM-DD'),
+      startTime: null,
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
       stepIndex: 0,
       finished: false,
       loading: true,
@@ -40,12 +45,47 @@ export default class App extends Component {
     this.handleNext = this.handleNext.bind(this)
     this.handlePrev = this.handlePrev.bind(this)
     this.handleChangeDate = this.handleChangeDate.bind(this)
+    this.handleChangeTime = this.handleChangeTime.bind(this)
+    this.handleChangeFirstName = this.handleChangeFirstName.bind(this)
+    this.handleChangeLastName = this.handleChangeLastName.bind(this)
+    this.handleChangeEmail = this.handleChangeEmail.bind(this)
+    this.handleChangePhone = this.handleChangePhone.bind(this)
+  }
+
+  handleChangeFirstName = (event, newValue) => {
+    this.setState({
+      firstName: newValue
+    })
+  }
+
+  handleChangeLastName = (event, newValue) => {
+    this.setState({
+      lastName: newValue
+    })
+  }
+
+  handleChangeEmail = (event, newValue) => {
+    this.setState({
+      email: newValue
+    })
+  }
+
+  handleChangePhone = (event, newValue) => {
+    this.setState({
+      phone: newValue
+    })
   }
 
   handleChangeDate = (_, date) => {
     this.setState({
-      date,
+      date: moment(date).format('YYYY-MM-DD'),
       confirmationTextVisible: true
+    })
+  }
+
+  handleChangeTime = (event, key, payload) => {
+    this.setState({
+      startTime: payload
     })
   }
 
@@ -91,8 +131,17 @@ export default class App extends Component {
   }
 
   render() {
-    const { finished, stepIndex, date } = this.state
-    console.log("**DATE***", date)
+    const { finished, stepIndex, date, startTime, firstName, lastName, email, phone } = this.state
+    console.log("FIRST", firstName)
+    console.log("LAST", lastName)
+    console.log("Email", email)
+    console.log("phone", phone)
+/*     console.log("**DATE***", moment(date).format('YYYY-MM-DD'))
+    console.log("**MONTH***", moment(date).format('M'))
+    console.log("**DAY***", moment(date).format('D'))
+    console.log("**YEAR***", moment(date).format('YYYY'))
+    console.log("**TIME***", moment(date).format('HH:mm'))
+    console.log(moment.utc("09:30", "HH:mm")._i) */
     return (
       <div>
       <AppBar
@@ -109,7 +158,6 @@ export default class App extends Component {
                   marginLeft: 10
                 }}
                 hintText="Select a date"
-                name="date"
                 onChange={this.handleChangeDate}
               />
               {this.renderStepActions(0)}
@@ -118,14 +166,15 @@ export default class App extends Component {
           <Step>
             <StepLabel>Choose an available time for your appointment</StepLabel>
             <StepContent>
-              <SelectField value={this.state.value} onChange={this.handleChange}>
-                <MenuItem value={9} primaryText="09:00AM - 10:00AM" />
-                <MenuItem value={10} primaryText="10:00AM - 11:00AM" />
-                <MenuItem value={11} primaryText="11:00AM - 12:00PM" />
-                <MenuItem value={13} primaryText="01:00PM - 02:00PM" />
-                <MenuItem value={14} primaryText="02:00PM - 03:00PM" />
-                <MenuItem value={15} primaryText="03:00PM - 04:00PM" />
-                <MenuItem value={16} primaryText="04:00PM - 05:00PM" />
+              <SelectField value={startTime} onChange={this.handleChangeTime}>
+                <MenuItem value={moment.utc('09:00', 'HH:mm')._i} primaryText="09:00AM - 10:00AM" />
+                <MenuItem value={moment.utc('10:00', 'HH:mm')._i} primaryText="10:00AM - 11:00AM" />
+                <MenuItem value={moment.utc('11:00', 'HH:mm')._i} primaryText="11:00AM - 12:00PM" />
+                <MenuItem value={moment.utc('13:00', 'HH:mm')._i} primaryText="01:00PM - 02:00PM" />
+                <MenuItem value={moment.utc('14:00', 'HH:mm')._i} primaryText="02:00PM - 03:00PM" />
+                <MenuItem value={moment.utc('15:00', 'HH:mm')._i} primaryText="03:00PM - 04:00PM" />
+                <MenuItem value={moment.utc('16:00', 'HH:mm')._i} primaryText="04:00PM - 05:00PM" />
+                <MenuItem value={moment.utc('17:00', 'HH:mm')._i} primaryText="05:00PM - 06:00PM" />
               </SelectField>
               {this.renderStepActions(1)}
             </StepContent>
@@ -141,32 +190,29 @@ export default class App extends Component {
                   name="first_name"
                   hintText="First Name"
                   floatingLabelText="First Name"
+                  onChange={this.handleChangeFirstName}
                 />
                 <TextField
                   style={{ display: 'block' }}
                   name="last_name"
                   hintText="Last Name"
                   floatingLabelText="Last Name"
+                  onChange={this.handleChangeLastName}
                 />
                 <TextField
                   style={{ display: 'block' }}
                   name="email"
                   hintText="name@mail.com"
                   floatingLabelText="Email"
+                  onChange={this.handleChangeEmail}
                 />
                 <TextField
                   style={{ display: 'block' }}
                   name="phone"
                   hintText="(888) 888-8888"
                   floatingLabelText="Phone"
+                  onChange={this.handleChangePhone}
                   />
-                <RaisedButton
-                  label="Submit"
-                  style={{ display: 'block' }}
-                  labelPosition="before"
-                  primary={true}
-                  fullWidth={true}
-                />
               </section>
               {this.renderStepActions(2)}
             </StepContent>
