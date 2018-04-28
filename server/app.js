@@ -7,6 +7,7 @@ const nodemailer = require('nodemailer')
 const db = require('./db')
 const app = express()
 const PORT = 3000
+const {Appointment} = require('./db')
 
 // Logging middleware
 app.use(morgan('dev'))
@@ -30,15 +31,26 @@ app.get('/*', (req, res, next) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'))
 })
 
+app.post('/api/appointment', async (req, res, next) => {
+  console.log("******", req.body)
+  try {
+    const appointment = await Appointment.create(req.body);
+    res.json(appointment)
+  } catch (error) {
+    next(error)
+  }
+})
+
 // should receive {messageId: 1, email: email@email, date: date, startTime: time, endTIme: time}
 app.post('/api/send', (req, res, next) => {
   const data = req.body;
+
   const output = `
     <h2> ${data.firstName}, your reservation is confirmed!</h2>
 
     <h5> Below are your reservation details</h5>
     <p>Appointment Date: ${data.date} </p>
-    <p>Appointment Time: ${data.startTime} to ${data.endTime} </p>
+    <p>Appointment Time: ${data.startTime} </p>
 
     `;
 
