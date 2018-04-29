@@ -3,7 +3,7 @@ const db = require('./db')
 
 const Appointment = db.define('appointment', {
   date: {
-    type: Sequelize.DATEONLY,
+    type: Sequelize.STRING,
     allowNull: false
   },
   time: {

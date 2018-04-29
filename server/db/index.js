@@ -1,4 +1,17 @@
-const Sequelize = require('sequelize')
-const db = new Sequelize('postgres://localhost/scheduling-app', {logging: false})
+const db = require('./db')
+const Appointment = require('./Appointment')
+const Client = require('./Client')
+const Resource = require('./Resource')
 
-module.exports = db;
+Appointment.belongsTo(Client)
+Client.hasMany(Appointment)
+
+Appointment.belongsTo(Resource)
+Resource.hasMany(Appointment)
+
+module.exports = {
+  db,
+  Appointment,
+  Resource,
+  Client
+}

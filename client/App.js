@@ -54,15 +54,13 @@ export default class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSubmit = () => {
-    axios.post('/api/send', {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
+  handleSubmit = (event) => {
+    axios.post('/api/sendemail', {
       email: this.state.email,
-      phone: this.state.phone,
       startTime: this.state.startTime,
       date: this.state.date
     })
+    this.setState({stepIndex: 0, finished: false})
   }
 
   handleChangeFirstName = (event, newValue) => {
@@ -227,21 +225,28 @@ export default class App extends Component {
             </StepContent>
           </Step>
         </Stepper>
-        {finished && (          //make sure this works!!!!!
-          this.handleSubmit
-        )}
-
         {finished && (
           <p style={{margin: '20px 0', textAlign: 'center'}}>
             <a
               href="#"
               onClick={(event) => {
                 event.preventDefault();
-                this.setState({stepIndex: 0, finished: false});
+                axios.post('/api/appointment', {
+                  date,
+                  time: startTime,
+                  status: 'taken'
+                })
+                axios.post('/api/sendemail', {
+                  firstName,
+                  email,
+                  startTime,
+                  date
+                })
+                this.setState({stepIndex: 0, finished: false})
               }}
             >
               Click here
-            </a> to reset the example.
+            </a> to confirm your appointment.
           </p>
         )}
       </div>

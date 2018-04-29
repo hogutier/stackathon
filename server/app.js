@@ -3,10 +3,9 @@ const path = require('path')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
-const db = require('./db')
+const { db } = require('./db')
 const app = express()
 const PORT = 3000
-const {Appointment} = require('./db')
 
 // Logging middleware
 app.use(morgan('dev'))

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const Appointment = require('../db/models')
+const { Appointment } = require('../db')
 
 router.post('/', async (req, res, next) => {
   console.log("******", req.body)
