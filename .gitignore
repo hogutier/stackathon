@@ -3,3 +3,4 @@ quickstart.js
 client_secret.json
 public/bundle.js
 .DS_Store
+.env
